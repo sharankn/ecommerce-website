@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>E-Commerce Store</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:Arial,sans-serif;
+            background:#f5f5f5;
+            padding:30px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .products{
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:25px;
+        }
+
+        .card{
+            width:220px;
+            background:#fff;
+            border-radius:12px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.15);
+            padding:15px;
+            text-align:center;
+        }
+
+        .card img{
+            width:180px;
+            height:180px;
+            object-fit:contain;
+            margin-bottom:10px;
+        }
+
+        .card h3{
+            margin:10px 0;
+            text-transform:capitalize;
+        }
+
+        .price{
+            font-size:28px;
+            font-weight:bold;
+            color:#222;
+            margin:15px 0;
+        }
+
+        form{
+            margin-top:15px;
+        }
+
+        button{
+            background:#007bff;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🛒 My E-Commerce Store</h1>
+<div style="text-align:right;margin-bottom:20px;">
+    <a href="/cart">
+        <button>🛒 View Cart</button>
+    </a>
+</div>
+
+
+<div class="products">
+
+    <div class="card" th:each="product : ${products}">
+
+        <img th:src="@{/images/{img}(img=${product.image})}" alt="Product"/>
+
+        <h3 th:text="${product.name}">Product Name</h3>
+
+        <p class="price">
+            ₹ <span th:text="${product.price}">0</span>
+        </p>
+
+        <form th:action="@{/cart/add}" method="post">
+
+            <input
+                type="hidden"
+                name="productId"
+                th:value="${product.id}"
+            />
+
+            <button type="submit">
+                Add to Cart
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
